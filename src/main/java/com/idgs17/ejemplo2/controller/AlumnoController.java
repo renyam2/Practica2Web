@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.idgs17.ejemplo2.entity.Alumno;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -38,5 +40,17 @@ public class AlumnoController {
 
         return ResponseEntity.ok(alumno);
     }
-    
+
+    @PutMapping("/api/alumnos/path/{id}")
+    public ResponseEntity<Alumno> putMethodName(@PathVariable int id, @RequestBody Alumno entity) {
+        Alumno alumno = alumnoRepository.findById(id).orElse(null);
+        if (alumno == null) {
+            return ResponseEntity.notFound().build();
+        }
+        alumno.setMatricula(entity.getMatricula());
+        alumno.setNombre(entity.getNombre());
+        alumno.setActivo(entity.getActivo());
+        Alumno actualizado = alumnoRepository.save(alumno);
+        return ResponseEntity.ok(actualizado);
+    }
 }
