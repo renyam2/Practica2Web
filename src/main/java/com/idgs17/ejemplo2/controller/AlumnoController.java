@@ -23,6 +23,11 @@ public class AlumnoController {
         return ResponseEntity.ok("Bienvenido a la API de Alumnos. Usa /api/alumnos/path");
     }
 
+    @GetMapping("/api/alumnos/path")
+    public ResponseEntity<java.util.List<Alumno>> getMethodName() {
+        return ResponseEntity.ok(alumnoRepository.findAll());
+    }
+
     @PostMapping("/api/alumnos/path")
     public ResponseEntity<Alumno> postMethodName(@RequestBody Alumno entity) {
         Alumno alumno = new Alumno();
